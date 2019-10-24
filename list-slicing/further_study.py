@@ -30,8 +30,12 @@ def custom_len(input_list):
         8
 
     """
+    count = 0 # initializes a count for the length of a lsit
 
-    return 0
+    for item in input_list:
+        count +=1
+
+    return count
 
 
 # For the next four exercises, you'll need to be clever and think about ways
@@ -58,8 +62,11 @@ def custom_append(input_list, value):
         True
 
     """
+    input_list += [value]
 
-    pass
+    # This was driving me crazy so I ended up looking into in place assignment 
+    # after trying input_list = input_list + [value] failed
+    # ref: https://stackoverflow.com/questions/47796013/whats-the-difference-between-in-place-assignment-and-assignment-using-the-varia
 
 
 def custom_extend(input_list, second_list):
@@ -77,8 +84,8 @@ def custom_extend(input_list, second_list):
         True
 
     """
-
-    pass
+    for item in second_list:
+        input_list += [item]
 
 
 def custom_insert(input_list, index, value):
@@ -95,8 +102,13 @@ def custom_insert(input_list, index, value):
         True
 
     """
+    after_index = input_list[index:]
 
-    pass
+    input_list[index:] = [value]
+
+    for item in after_index:
+        input_list += [item] 
+        # brackets prevent each char from being added as an item in list
 
 
 def custom_remove(input_list, value):
@@ -114,8 +126,13 @@ def custom_remove(input_list, value):
         True
 
     """
+    removal_location = 0
 
-    pass
+    for item in input_list:
+        if item == value:
+            del input_list[removal_location] # w/o return list removes all matching items
+            return # this is what was preventing me from passing tests
+        removal_location += 1
 
 
 def custom_pop(input_list):
@@ -133,8 +150,11 @@ def custom_pop(input_list):
         ['Jan', 'Feb']
 
     """
+    item_to_pop = input_list[-1]
+    del input_list[-1]
 
-    return None
+    return item_to_pop
+    # passes!
 
 
 def custom_index(input_list, value):
@@ -149,8 +169,12 @@ def custom_index(input_list, value):
         1
 
     """
+    index = 0
 
-    return 0
+    for item in input_list:
+        if item == value:
+            return index
+        index += 1
 
 
 def custom_count(input_list, value):
@@ -165,8 +189,13 @@ def custom_count(input_list, value):
         2
 
     """
+    count = 0
 
-    return 0
+    for item in input_list:
+        if item == value:
+            count += 1
+
+    return count
 
 
 def custom_reverse(input_list):
@@ -184,8 +213,11 @@ def custom_reverse(input_list):
         True
 
     """
+    add_list = input_list[::-1]
 
-    pass
+    for item in add_list:
+        input_list += [item]
+        del input_list[0]
 
 
 def custom_contains(input_list, value):
@@ -204,8 +236,11 @@ def custom_contains(input_list, value):
         True
 
     """
+    for item in input_list:
+        if item == value:
+            return True
 
-    return None
+    return False
 
 
 def custom_equality(some_list, another_list):
@@ -223,8 +258,14 @@ def custom_equality(some_list, another_list):
         False
 
     """
+    check_location = 0
 
-    return None
+    for some_item in some_list:
+        if not some_item == another_list[check_location]:
+            return False
+        check_location += 1
+
+    return True
 
 
 ##############################################################################
