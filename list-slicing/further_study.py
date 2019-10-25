@@ -69,6 +69,11 @@ def custom_append(input_list, value):
     # ref: https://stackoverflow.com/questions/47796013/whats-the-difference-between-in-place-assignment-and-assignment-using-the-varia
 
 
+    # another solution! - Kerry
+    # length = custom_len(input_list)
+    # input_list[length:] = [value]
+    # accesses at the end of the list and just assigned the value as next location
+
 def custom_extend(input_list, second_list):
     """Append every item in second_list to input_list.
 
@@ -87,6 +92,10 @@ def custom_extend(input_list, second_list):
     for item in second_list:
         input_list += [item]
 
+    # Another Solution! - Kerry
+    # length = custom_len(input_list)
+    # input_list[length:] = second_list
+    # similar to above
 
 def custom_insert(input_list, index, value):
     """Insert value at index in the list.
@@ -102,7 +111,7 @@ def custom_insert(input_list, index, value):
         True
 
     """
-    after_index = input_list[index:]
+    after_index = input_list[index:] # items located after the input index
 
     input_list[index:] = [value]
 
@@ -110,6 +119,10 @@ def custom_insert(input_list, index, value):
         input_list += [item] 
         # brackets prevent each char from being added as an item in list
 
+    # Another Solution! - Kerry
+
+    # input_list[index:index] = [value]
+    # wild, access at an index but not including to add in a reference  between
 
 def custom_remove(input_list, value):
     """Remove the first item of the value in list.
@@ -219,6 +232,9 @@ def custom_reverse(input_list):
         input_list += [item]
         del input_list[0]
 
+    # Another Solution! - Kerry
+    # input_list[:] = input_list[::-1]
+
 
 def custom_contains(input_list, value):
     """Return True or False if value is in the input_list.
@@ -267,7 +283,9 @@ def custom_equality(some_list, another_list):
 
     return True
 
-
+    # A better solution - Kerry
+    # return some_list == another_list
+    # simple and clean
 ##############################################################################
 # Please ask for a code review. Also, give your partner a high-five!
 ##############################################################################
