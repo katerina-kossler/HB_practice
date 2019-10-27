@@ -198,11 +198,14 @@ def find_name_duplicates(filename):
 
     file = open(filename)
 
-    winter_16 = ([])
-    spring_16 = ([])
-    summer_16 = ([])
-    fall_15 = ([])
+    # initialize empty sets for each cohort
+    winter_16 = set([])
+    spring_16 = set([])
+    summer_16 = set([])
+    fall_15 = set([])
 
+    # loops through each line in the input file (assumed .txt)
+    # adds each student last name to matching cohort list
     for line in file:
         line = line.rstrip()
         info = line.split('|')
@@ -217,11 +220,8 @@ def find_name_duplicates(filename):
         elif cohort == "Fall 2015":
             fall_15.add(last_name)
 
-
-    # separate names by cohort into a set 
-    # use intersection of sets '&' to find names that occur 
-
-    duplicate_names =
+    # finds intersection of all 4 cohorts
+    duplicate_names = winter_16 & spring_16 & summer_16 & fall_15
 
     return duplicate_names
 
@@ -252,17 +252,19 @@ def find_house_members_by_student_name(student_list):
 
      """
 
-    # Code goes here
+    # new code
 
     return
 
 
 #############################################################################
 # Here is some useful code to run these functions without doctests!
+
 all_students_data = all_students_tuple_list("cohort_data.txt")
 print(find_cohort_by_student_name(all_students_data))
 
-# find_house_members_by_student_name(all_students_data)
+
+find_house_members_by_student_name(all_students_data)
 
 
 ##############################################################################
