@@ -252,25 +252,50 @@ def find_house_members_by_student_name(student_list):
 
      """
 
-    # new code
+    selected_student = input("Which student are you interested in? (Full Name Please): ")
 
-    return
+    # student_list = [[full_name, house, advisor, cohort],...] 
+    # loop through list of students to gather house & cohort of selected student
+    for student_name, house, advisor, cohort in student_list:
+        if student_name == selected_student:
+            selected_house = house
+            selected_cohort = cohort
+            break
+        print("Student not Found")
+        return
 
+    print('''{} was in house {} in the {} cohort.
+    '''.format(selected_student, selected_house, selected_cohort))
+
+    # loop through set of students to build sets of the selected student's
+    #  house and cohort members
+    house_members = set([])
+    cohort_members = set([])
+    for student_name, house, advisor, cohort in student_list:
+        if house == selected_house:
+            house_members.add(student_name)
+        if cohort == selected_cohort:
+            cohort_members.add(student_name)
+    
+    # find students that were in same cohort and house as selected student
+    house_and_cohort_members = house_members & cohort_members
+
+    print ("The following students were also in their house:")
+    for member in house_and_cohort_members:
+        print(member)
 
 #############################################################################
 # Here is some useful code to run these functions without doctests!
 
 all_students_data = all_students_tuple_list("cohort_data.txt")
+
 print(find_cohort_by_student_name(all_students_data))
-
-
 find_house_members_by_student_name(all_students_data)
 
 
 ##############################################################################
 # END OF MAIN EXERCISE.  Yay!  You did it! You Rock!
 #
-
 
 
 if __name__ == "__main__":
