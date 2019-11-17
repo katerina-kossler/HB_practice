@@ -6,17 +6,34 @@
 <body>
     <h1> Pick your things: </h1>
     <form action="/madlib">
-        Person:<input type="text" name="person">
+        Person:<input type="text" name="person"><br>
+
         {% if colors %}
             Color: <select name="color_choice">
             {% for color in colors %}
                 <option value={{ color }}>{{ color }}</option>
             {% endfor %}
-            </select>
+            </select><br>
         {% endif %}
-        Noun: <input type="text" name="noun">
-        Adjective: <input type="text" name="adjective">
+
+        {% if nouns %}
+            Noun(s):<br> 
+            {% for noun in nouns %}
+                <input type="checkbox" name="nouns" value={{ noun }}> 
+                {{ noun }} <br>
+            {% endfor %}
+        {% endif %}
+
+        {% if adjectives %}
+            Adjective(s):<br>
+            {% for adjective in adjectives %}
+                <input type="checkbox" name="adjectives" value={{ adjective }}> 
+                {{ adjective }} <br>
+            {% endfor %}
+        {% endif %}
+
         <input type="submit">
+        <input type="reset">
     </form>
 </body>
 </html>

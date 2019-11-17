@@ -1,6 +1,6 @@
 """A madlib game that compliments its users."""
 
-from random import choice
+from random import choice, choices
 
 from flask import Flask, render_template, request
 
@@ -35,25 +35,31 @@ def greet_person():
 
     player = request.args.get("person")
 
-    compliment = choice(AWESOMENESS)
+    compliments = choices(AWESOMENESS, k = 3)
 
     return render_template("compliment.html",
                            person=player,
-                           compliment=compliment)
+                           compliments=compliments)
 
 
 @app.route('/game')
 def show_madlib_form():
     """Get user response to game and responds appropriately"""
-   
-    color_options = ['blue', 'white', 'black', 'green', 'red', 'orange',
-                     'yellow', 'purple', 'brown']
+
+    colors = ['blue', 'white', 'black', 'green', 'red', 'orange',
+              'yellow', 'purple', 'brown']
+    nouns = ['dog', 'cat', 'unicorn', 'radish', 'kumquat', 'hair brush',
+             'empanada', 'mouse', 'cookie']
+    adjectives = ['pretty', 'loud', 'firey', 'bouncy', 'obtuse', 'translucent',
+                  'windy']
+
     play_game_response = request.args.get('playing')
 
     if play_game_response == "No":
         return render_template("goodbye.html")
 
-    return render_template("game.html", colors=color_options)
+    return render_template("game.html", colors=colors, nouns=nouns,
+                           adjectives=adjectives)
 
 
 @app.route('/madlib')
@@ -62,8 +68,11 @@ def show_madlib():
 
     color = request.args.get('color_choice')
     person = request.args.get('person')
-    adjective = request.args.get('adjective')
-    noun = request.args.get('noun')
+    adjectives = request.args.getlist('adjectives')
+    adjective = choice(adjectives)
+    nouns = request.args.getlist('nouns')
+    noun = choice(nouns)
+
 
     return render_template('madlib.html', color=color, person=person,
                            adjective=adjective, noun=noun)

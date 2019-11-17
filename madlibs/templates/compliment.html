@@ -4,7 +4,14 @@
   <title>A Compliment</title>
 </head>
 <body>
-    Hi {{ person }}! I think you're {{ compliment }}!
+    Hi {{ person }}! I think you're
+    {% for compliment in compliments %}
+        {% if compliment == compliments[-1] %}
+            and {{ compliment }}!
+        {% else %}
+            {{ compliment }},
+        {% endif %}
+    {% endfor %} 
     <form action="/game">
         Do you want to play a game?
         <input type="radio" name="playing" value="Yes">Yes
