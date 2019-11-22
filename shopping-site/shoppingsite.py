@@ -76,7 +76,24 @@ def show_shopping_cart():
     # Make sure your function can also handle the case wherein no cart has
     # been added to the session
 
-    return render_template("cart.html")
+    if not session.get('cart'):
+        flash('You currently have no melons in your cart.')
+        return redirect("/melons")
+
+    melon_cart = []
+    total = 0
+    cart = session['cart']
+
+    for item in cart:
+        melon = melons.get_by_id(item)
+        quantity = session['cart'][item]
+        price = melon.price
+        melon.quantity = quantity
+        melon_total = price * quantity
+        total += melon_total
+        melon.total = melon_total
+        melon_cart.append(melon)
+    return render_template("cart.html", melon_cart=melon_cart, total=total)
 
 
 @app.route("/add_to_cart/<melon_id>")
@@ -86,17 +103,6 @@ def add_to_cart(melon_id):
     When a melon is added to the cart, redirect browser to the shopping cart
     page and display a confirmation message: 'Melon successfully added to
     cart'."""
-
-    # TODO: Finish shopping cart functionality
-
-    # The logic here should be something like:
-    #
-    # - check if a "cart" exists in the session, and create one (an empty
-    #   dictionary keyed to the string "cart") if not
-    # - check if the desired melon id is the cart, and if not, put it in
-    # - increment the count for that melon id by 1
-    # - flash a success message
-    # - redirect the user to the cart page
 
     if not session.get('cart'):
         session['cart'] = {}
