@@ -4,6 +4,7 @@ A front-end for a database that allows users to work with students, class
 projects, and the grades students receive in class projects.
 """
 
+
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 
