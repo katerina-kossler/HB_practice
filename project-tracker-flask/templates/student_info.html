@@ -9,7 +9,9 @@
     <ul>
     {% for project in projects %}
 
-        <li> {{ project[0] }}: {{ project[1] }}</li>
+        <li> 
+            <a href='project?title={{ project[0] }}'>{{ project[0] }}</a> : {{ project[1] }}
+        </li>
 
     {% endfor %}
     </ul>
