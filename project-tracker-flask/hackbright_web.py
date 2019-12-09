@@ -9,6 +9,22 @@ app = Flask(__name__)
 # new-student > student-added (> student)
 # project-search > project
 
+@app.route("/")
+def get_homepage():
+    """Show homepage with lists of all students & projects"""
+
+    students = hackbright.get_students()
+    projects = hackbright.get_projects()
+
+    html = render_template("homepage.html", 
+                           students=students,
+                           projects=projects)
+
+    return html
+
+
+
+
 @app.route("/student-search")
 def get_student_form():
     """Searches for student via github username"""
