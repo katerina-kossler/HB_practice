@@ -17,6 +17,7 @@ function countWords(phrase) {
   let words = phrase.split(' ');
 
   for (const word of words) {
+    if (!wordCounts.word)
     if (!wordCounts[word]) {
       wordCounts[word] = 1;
     }
@@ -33,3 +34,5 @@ console.log(countWords('bananas are good for bananas are good for bananas'))
 function getMelonsAtPrice(price) {
 	// Replace this with your code
 }
+
+// wordsCount['word']
