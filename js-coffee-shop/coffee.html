@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Hackbright Coffee Shop</title>
+  <!-- jQuery link -->
+  <script
+  src="http://code.jquery.com/jquery-3.4.1.js"
+  integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+  crossorigin="anonymous"></script>
+  <!-- Bootstrap links -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+  <!-- Google fonts link -->
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Raleway" >
+  <!-- Our CSS -->
+  <link rel="stylesheet" href="static/coffee.css">
+</head>
+<body>
+  <div class="container">
+    <div class="starter-template">
+      <h1>Coffee Shop</h1>
+
+      <img
+        id="coffee-image"
+        alt="make this image work with js"
+        height="300"
+        width="200">
+
+      <h3 id="message">Click The Image To Order Coffee</h3>
+
+      <table class="table">
+        <tr>
+          <td class="col-md-2">
+            <button class="btn btn-default" id="espresso">Espresso</button>
+          </td>
+          <td class="col-md-2">
+            <button class="btn btn-default" id="latte">Latte</button>
+          </td>
+          <td class="col-md-2">
+            <button class="btn btn-default" id="hot-chocolate">
+              Hot Chocolate
+            </button>
+          </td>
+        </tr>
+        <tr>
+          <td>$3.25</td>
+          <td>$4.15</td>
+          <td>$2.50</td>
+        </tr>
+      </table>
+
+      <h4>
+        Total: <span id="revenue"><!-- Revenue Message will show up here --></span>
+      </h4>
+    </div>
+  </div>
+
+  <script>
+    //  Vanilla JS Solution:
+//
+//    const coffeeImage = document.querySelector('#coffee-image');
+//    coffeeImage.setAttribute('src', 'static/coffee_beans.jpg');
+//    coffeeImage.addEventListener("click", makeCoffee);
+//    function makeCoffee () {
+//    
+//        coffeeImage.setAttribute('src', 'static/coffee_machine.jpg');
+//        setTimeout(() => {coffeeImage.setAttribute('src', 'static/coffee_mug.jpg');}, 1500);
+//        setTimeout(() => {coffeeImage.setAttribute('src', 'static/coffee_beans.jpg');}, 4000);
+//    }
+
+    //  jQuery:
+
+    $('#coffee-image').attr('src','static/coffee_beans.jpg');
+    $('#coffee-image').click(makeCoffee);
+    function makeCoffee () {
+        $('#coffee-image').attr('src','static/coffee_machine.jpg');
+        setTimeout(() => {$('#coffee-image').attr('src','static/coffee_mug.jpg')}, 1500);
+        setTimeout(() => {$('#coffee-image').attr('src','static/coffee_beans.jpg')}, 4000);
+    }
+
+    // use this JavaScript object in further study step
+
+    const prices = {
+      'brew': 2.05,
+      'espresso': 3.25,
+      'latte': 4.15,
+      'hot chocolate': 2.50
+    };
+
+
+  </script>
+
+</body>
+</html>
