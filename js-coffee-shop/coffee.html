@@ -69,24 +69,39 @@
 //    }
 
     //  jQuery:
+    let drinksOrdered = [];
 
-    $('#coffee-image').attr('src','static/coffee_beans.jpg');
-    $('#coffee-image').click(makeCoffee);
-    function makeCoffee () {
+    function makeCoffee (drinkType) {
+        drinksOrdered.push(drinkType);
+        console.log(drinksOrdered);
         $('#coffee-image').attr('src','static/coffee_machine.jpg');
         setTimeout(() => {$('#coffee-image').attr('src','static/coffee_mug.jpg')}, 1500);
         setTimeout(() => {$('#coffee-image').attr('src','static/coffee_beans.jpg')}, 4000);
+        $('#revenue').html(revenue(drinksOrdered));
     }
 
-    // use this JavaScript object in further study step
+    $('#coffee-image').attr('src','static/coffee_beans.jpg');
+    $('#coffee-image').click(() => makeCoffee('brew'));
+
+    $('button.btn').on('click', (evt) => {
+        const drinkType = $(evt.target).attr('id');
+        makeCoffee(drinkType);
+    });
 
     const prices = {
       'brew': 2.05,
       'espresso': 3.25,
       'latte': 4.15,
-      'hot chocolate': 2.50
+      'hot-chocolate': 2.50
     };
 
+    function revenue (drinksOrdered) {
+        let total = 0;
+        for (drink of drinksOrdered) {
+            total = total + (prices[drink]);
+        }
+        return total;
+    }
 
   </script>
 
