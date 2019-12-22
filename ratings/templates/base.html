@@ -1,0 +1,23 @@
+</!DOCTYPE html>
+<html>
+<head>
+    <title>Movie Ratings!</title>
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <ul class=flashes>
+        {% for message in messages %}
+          {{ message }}
+        {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+</head>
+<body>
+    Movie Ratings!
+    <hr>
+
+    {% block content %} Content {% endblock %}
+
+
+</body>
+</html>

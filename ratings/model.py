@@ -17,44 +17,75 @@ class User(db.Model):
 
     __tablename__ = "users"
 
-    user_id = db.Column(db.Integer, 
-                        autoincrement=True, 
+    user_id = db.Column(db.Integer,
+                        autoincrement=True,
                         primary_key=True)
-    email = db.Column(db.String(64), nullable=True)
-    password = db.Column(db.String(64), nullable=True)
-    age = db.Column(db.Integer, nullable=True)
-    zipcode = db.Column(db.String(15), nullable=True)
+    email = db.Column(db.String(64),
+                      nullable=True)
+    password = db.Column(db.String(64),
+                         nullable=True)
+    age = db.Column(db.Integer,
+                    nullable=True)
+    zipcode = db.Column(db.String(15),
+                        nullable=True)
 
-
+    rating = db.relationship("Rating")
 
     def __repr__(self):
         """Provide helpful representation when printed."""
 
-        return f"<User user_id={self.user_id} email={self.email}>"
+        return f"""<User user_id={self.user_id}
+                    email={self.email}>"""
 
-  
+
 class Movie(db.Model):
     """Movies in ratings website"""
 
     __tablename__ = "movie"
 
-    movie_id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(256), nullable=True)
-    released_at = db.Column(db.DateTime, nullable=True)
-    imdb_url = db.Column(db.String(256), nullable=True)
+    movie_id = db.Column(db.Integer,
+                         primary_key=True)
+    title = db.Column(db.String(256),
+                      nullable=True)
+    released_at = db.Column(db.DateTime,
+                            nullable=True)
+    imdb_url = db.Column(db.String(256),
+                         nullable=True)
+
+    rating = db.relationship("Rating")
+
 
 class Rating(db.Model):
     """Ratings in ratings website"""
 
     __tablename__ = "rating"
 
-    rating_id = db.Column(db.Integer, primary_key=True)
-    movie_id = db.Column(db.Integer, nullable=True)
-    user_id = db.Column(db.Integer, nullable=True)
-    score = db.Column(db.Integer, nullable=True)
+    rating_id = db.Column(db.Integer,
+                          autoincrement=True,
+                          primary_key=True)
+    movie_id = db.Column(db.Integer,
+                         db.ForeignKey('movie.movie_id'),
+                         nullable=True)
+    user_id = db.Column(db.Integer,
+                        db.ForeignKey('users.user_id'),
+                        nullable=True)
+    score = db.Column(db.Integer,
+                      nullable=True)
+
+    user = db.relationship("User")
+    movie = db.relationship("Movie")
+
+    def __repr__(self):
+        """Provide helpful representation when printed."""
+
+        return f"""<Rating rating_id={self.rating_id}
+                   movie_id={self.movie_id}
+                   user_id={self.user_id}
+                   score={self.score}>"""
 
 ##############################################################################
 # Helper functions
+
 
 def connect_to_db(app):
     """Connect the database to our Flask app."""

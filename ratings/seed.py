@@ -2,8 +2,6 @@
 
 from sqlalchemy import func
 from model import User, Movie, Rating
-# from model import Rating
-# from model import Movie
 
 from model import connect_to_db, db
 from server import app
@@ -48,7 +46,7 @@ def load_movies():
         items = row.split("|")
 
         movie_id = items[0]
-        title = items[1]
+        title = items[1].split(" (")[0]
         date_str = items[2]
         format = "%d-%b-%Y"
         released_at = datetime.strptime(date_str, format)
