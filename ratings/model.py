@@ -29,7 +29,7 @@ class User(db.Model):
     zipcode = db.Column(db.String(15),
                         nullable=True)
 
-    rating = db.relationship("Rating")
+    ratings = db.relationship("Rating")
 
     def __repr__(self):
         """Provide helpful representation when printed."""
@@ -52,7 +52,7 @@ class Movie(db.Model):
     imdb_url = db.Column(db.String(256),
                          nullable=True)
 
-    rating = db.relationship("Rating")
+    ratings = db.relationship("Rating")
 
 
 class Rating(db.Model):

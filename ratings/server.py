@@ -30,8 +30,27 @@ def user_list():
     """Show list of users"""
 
     users = User.query.all()
+
     return render_template("user_list.html",
                             users=users)
+
+
+@app.route('/users/<user_id>')
+def display_user_page(user_id):
+    """ still in progress """
+
+    user = User.query.get(user_id)
+    # user.email, user.zipcode, user.age, user.ratings (returns a list)
+    # still in progress - can then access list of ratings with setup
+
+    ratings = db.session.query(Movie.title,
+                               Rating.score).join(Rating).all()
+
+    # later: connect movie id to movie name > Rating.movie_id : Movie.title
+
+    return render_template('user.html',
+                           user=user,
+                           ratings=ratings)
 
 
 @app.route('/movies')
@@ -40,7 +59,7 @@ def movie_list():
 
     movies = Movie.query.all()
     return render_template('movie_list.html',
-                            movies=movies)
+                           movies=movies)
 
 
 @app.route('/register', methods=['GET'])
@@ -92,6 +111,15 @@ def authenticate_user():
     if (password_in_system == password):
         session['current_user'] = user_in_system.user_id
         flash('Successfully Logged in')
+
+    return redirect('/users/{}'.format(session['current_user']))
+
+@app.route('/logout')
+def logout_user():
+    """Logout a user"""
+
+    del session['current_user']
+    flash('Successfully Logged out')
 
     return redirect('/')
 
