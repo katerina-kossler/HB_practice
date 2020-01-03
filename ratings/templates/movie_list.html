@@ -6,9 +6,8 @@
     <ul> 
       {% for movie in movies %}
         <li>
-          <a href={{ movie.imdb_url }}> 
-            {{ movie.title }}
-          </a>
+          <a href={{ movie.imdb_url }}> {{ movie.title }} </a>
+             ({{ movie.released_at.year }})
         </li>
       {% endfor %}
     </ul>}}
