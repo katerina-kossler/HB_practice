@@ -39,12 +39,14 @@ def user_list():
 def display_user_page(user_id):
     """ still in progress """
 
-    user = User.query.get(user_id)
+    user = User.query.options(db.joinedload('ratings')).get(user_id)
     # user.email, user.zipcode, user.age, user.ratings (returns a list)
     # still in progress - can then access list of ratings with setup
+    print(user)
 
     ratings = db.session.query(Movie.title,
-                               Rating.score).join(Rating).all()
+                               Rating.score).join(Rating).filter_by(
+                               user_id=user_id).all()
 
     # later: connect movie id to movie name > Rating.movie_id : Movie.title
 
