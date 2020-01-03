@@ -21,7 +21,7 @@ app.jinja_env.undefined = StrictUndefined
 
 @app.route('/')
 def index():
-    """Homepage."""
+    """Homepage"""
     return render_template('homepage.html')
 
 
@@ -37,19 +37,12 @@ def user_list():
 
 @app.route('/users/<user_id>')
 def display_user_page(user_id):
-    """ still in progress """
+    """Shows user information and completed ratings for movies"""
 
-    user = User.query.options(db.joinedload('ratings')).get(user_id)
-    # user.email, user.zipcode, user.age, user.ratings (returns a list)
-    # still in progress - can then access list of ratings with setup
-    print(user)
-
+    user = User.query.get(user_id)
     ratings = db.session.query(Movie.title,
                                Rating.score).join(Rating).filter_by(
                                user_id=user_id).all()
-
-    # later: connect movie id to movie name > Rating.movie_id : Movie.title
-
     return render_template('user.html',
                            user=user,
                            ratings=ratings)
@@ -57,7 +50,7 @@ def display_user_page(user_id):
 
 @app.route('/movies')
 def movie_list():
-    """Show list of movies"""
+    """Show list of movies in the db"""
 
     movies = Movie.query.order_by(Movie.title).all()
     return render_template('movie_list.html',
@@ -66,14 +59,14 @@ def movie_list():
 
 @app.route('/register', methods=['GET'])
 def display_register_form():
-    """Shows a form for user to add information"""
+    """Shows a form for a new user to add information"""
 
     return render_template('register_form.html')
 
 
 @app.route('/register', methods=['POST'])
 def register_process():
-    """Processes user information"""
+    """Processes new user information"""
 
     email = request.form.get("email")
     password = request.form.get("password")
@@ -81,7 +74,6 @@ def register_process():
     zipcode = request.form.get("zipcode")
 
     user_in_system = User.query.filter_by(email=email).first()
-
     if not user_in_system:
         user = User(email=email,
                     password=password,
@@ -89,20 +81,19 @@ def register_process():
                     zipcode=zipcode)
         db.session.add(user)
         db.session.commit()
-
     return redirect('/')
 
 
 @app.route('/login', methods=['GET'])
 def display_login_form():
-    """Shows the login screen that requests user email and password"""
+    """Shows the login screen that requests user email and password """
 
     return render_template('login_form.html')
 
 
 @app.route('/login', methods=['POST'])
 def authenticate_user():
-    """Compare user input information to stored users"""
+    """Compares user input information to stored user data """
 
     email = request.form.get("email")
     password = request.form.get("password")
@@ -113,17 +104,21 @@ def authenticate_user():
     if (password_in_system == password):
         session['current_user'] = user_in_system.user_id
         flash('Successfully Logged in')
+        return redirect('/users/{}'.format(session['current_user']))
 
-    return redirect('/users/{}'.format(session['current_user']))
+    elif not (password_in_system == password):
+        flash('Incorrect login information; try again')
+        return redirect('/login')
+    
 
 @app.route('/logout')
 def logout_user():
-    """Logout a user"""
+    """Logout a user; removes current session info """
 
     del session['current_user']
     flash('Successfully Logged out')
-
     return redirect('/')
+
 
 if __name__ == "__main__":
     # We have to set debug=True here, since it has to be True at the
