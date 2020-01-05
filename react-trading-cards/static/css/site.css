@@ -1,0 +1,13 @@
+div.card {
+	border-radius: 3px;
+	border: 3px solid black;
+	width: 20em;
+	height: 23em;
+	margin: 2em;
+	padding: 1em;
+}
+
+body {
+	font-family: "Trebuchet MS", Helvetica, sans-serif	
+}
+
