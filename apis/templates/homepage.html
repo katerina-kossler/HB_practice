@@ -3,29 +3,32 @@
 {% block title %}Come To My Party!{% endblock %}
 
 {% block content %}
-
+<div class="container">
   <div class="row">
+    <div class="col-7">
+      <div id="welcome">
+        <h2>Welcome</h2>
+        <p>I'm having a party! I'd love for you to come!</p>
+      </div>
 
-    <div class="col-xs-12">
-      <img src="/static/img/cupcake.png" align="right" alt="Cupcake">
+      <div id="afterparty">
+        <h2>Afterparty</h2>
+        <p>
+          Let's find a concert or something to go to after the party. Help
+          me organize this!
+        </p>
 
-      <h2>Welcome</h2>
-
-      <p>I'm having a party! I'd love for you to come!</p>
-
-      <h2>Afterparty</h2>
-
-      <p><a href="/afterparty-search">Help me keep the party going!</a></p>
-
-      <h2>Promote My Party</h2>
-
-      <p><a href="/create-event">Make an event on Eventbrite!</a></p>
-
-      <p><a href="/my-events">View your events</a></p>
-
+        <p>
+          <a class="btn btn-primary" href="/afterparty">
+            Click here to search for an event
+          </a>
+        </p>
+      </div>
     </div>
 
+    <div class="col">
+      <img src="/static/img/cupcake.png" alt="Cupcake">
+    </div>
   </div>
-
-
+</div>
 {% endblock %}
