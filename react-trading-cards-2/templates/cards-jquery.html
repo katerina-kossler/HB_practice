@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+
+{% block title %} Cards {% endblock %}
+
+{% block body %}
+  <div>
+    <h2>Add New Trading Card</h2>
+
+    Name <input type="text" id="nameField">
+    Skill <input type="text" id="skillField">
+    <button id="addCard">Add</button>
+
+    <h2>Trading Cards</h2>
+
+  </div>
+
+  <div id="container"></div>
+{% endblock %}
+
+{% block js %}
+  <script>
+    function getCardData() {
+      // Get the up to date card data from DB.
+
+      $.get('/cards.json', insertCardData);
+    }
+
+    const insertCardData = (response) => {
+      // Once the data has been provided by the server,
+      // insert it into the page as an HTML string.
+
+      const listOfCards = response.cards;
+
+      const container = $('#container');
+
+      container.empty()
+
+      for (const currentCard of listOfCards) {
+        if (currentCard.imgUrl === null){
+          currentCard.imgUrl = '/static/img/placeholder.png';
+        }
+
+        container.append(`
+          <div class='card'>
+            <p>Name: ${currentCard.name}</p>
+            <img src='${currentCard.imgUrl}'>
+            <p>Skill: ${currentCard.skill} </p>
+          </div>`
+        );
+      }
+    }
+
+    const addNewCard = (evt) => {
+      // Respond to the Add New Card form getting submitted.
+      // This is an event handling function.
+
+      // Get name that user typed in Name field.
+      const name = $('#nameField').val();
+
+      // Get skill that user typed in Skill field.
+      const skill = $('#skillField').val();
+
+      const formData = {
+        skill: skill,
+        name: name
+      };
+
+      $.post('/add-card', formData, (response) => {
+        // Great, so now we're back from the server.
+        // A new card got added!
+
+        // Let's tell our page to go get the most recent card data.
+        // This will 1) get the card data again and
+        // 2) update the DOM with most 'fresh' card data that
+        // include the new card.
+        // For information on how, go review this next function's
+        // definition above.
+        getCardData();
+      });
+    }
+
+
+    // Attach the addNewCard function to the 'Add' button click.
+    $('#addCard').on('click', addNewCard);
+
+    // Get intial cards when page initially loads!
+    getCardData();
+  </script>
+{% endblock %}
