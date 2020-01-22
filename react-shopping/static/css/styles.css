@@ -1,0 +1,12 @@
+.melon-card {
+  max-width: 23%;
+  margin: 0.5rem;
+}
+
+.melon-card h5 {
+  font-size: 1rem;
+}
+
+#shopping .filters {
+  min-width: 20%;
+}
